@@ -1,0 +1,100 @@
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!.env.template
+*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# JavaScript / TypeScript
+node_modules/
+dist/
+build/
+out/
+.output/
+.next/
+.nuxt/
+.svelte-kit/
+.astro/
+.vite/
+.turbo/
+.parcel-cache/
+.cache/
+coverage/
+*.tsbuildinfo
+
+# Java / JVM
+target/
+.gradle/
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+!gradle/wrapper/gradle-wrapper.jar
+!.mvn/wrapper/maven-wrapper.jar
+hs_err_pid*
+replay_pid*
+
+# Maven / Gradle local files
+.mvn/timing.properties
+gradle-app.setting
+
+# Swift / Xcode
+.build/
+.swiftpm/
+DerivedData/
+Package.pins
+*.xcuserstate
+xcuserdata/
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.playground/xcuserdata/
+timeline.xctimeline
+playground.xcworkspace/
+
+# Xcode build products
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.app
+
+# JetBrains IDEs
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# VS Code
+.vscode/
+
+# Xcode user data
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# General editor / temp files
+*.swp
+*.swo
+*~
+.tmp/
+tmp/
+temp/
