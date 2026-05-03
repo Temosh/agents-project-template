@@ -15,10 +15,9 @@ Icon?
 !.env.template
 *.local
 
-# Agent discovery symlinks
+# Agents
 .clinerules
-.claude/rules
-.claude/skills
+.claude
 
 # Logs
 *.log
