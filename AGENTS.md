@@ -11,6 +11,12 @@ Use this file as the short entry point for Claude Code, Codex, Copilot, Cline, a
 3. Inspect the existing code before making assumptions about architecture or style.
 4. Prefer small, focused changes that preserve user work already present in the tree.
 
+## Task Notes
+
+Use `.agents/tasks/` for task-specific agent working notes that should persist across sessions, such as investigation findings, implementation plans, decisions, and handoff state.
+
+Create one subfolder per meaningful task or workstream, for example `.agents/tasks/<task-name>/`, and name the main task note `TASK.md` to mirror the `SKILL.md` convention. Use `TASK.md` for the objective, current state, plan, decisions, findings, and handoff notes. Keep reusable guidance in `.agents/rules/`, project facts and user-facing documentation in `docs/`, and transient scratch notes in the current conversation unless they need to be handed off.
+
 ## Commands
 
 Replace these placeholders when a project is created:

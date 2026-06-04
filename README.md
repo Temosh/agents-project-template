@@ -12,7 +12,10 @@ The template keeps agent instructions in one shared place and exposes them throu
 ├── CLAUDE.md                 # Thin reference to AGENTS.md
 ├── .agents/
 │   ├── rules/                # Source of truth for agent rules
-│   └── skills/               # Reusable agent skills
+│   ├── skills/               # Reusable agent skills
+│   └── tasks/                # Task-specific agent notes, created as needed
+│       └── <task-name>/
+│           └── TASK.md       # Main task plan, findings, and handoff note
 ├── .claude/
 │   ├── rules -> ../.agents/rules
 │   └── skills -> ../.agents/skills
@@ -49,13 +52,20 @@ Required symlinks:
 |-------|---------|
 | `.agents/skills/project-initialization/SKILL.md` | First setup pass for a new project: gather context, ask clarifying questions, create initial docs, and replace template placeholders with real project guidance |
 
+## Task Notes
+
+Use `.agents/tasks/<task-name>/TASK.md` for persistent notes about a specific task or workstream. The uppercase `TASK.md` filename intentionally mirrors `SKILL.md`; use it as the main task document for the objective, current state, plan, decisions, findings, and handoff notes.
+
+Keep reusable conventions in `.agents/rules/`, reusable procedures in `.agents/skills/`, and product or architecture documentation in `docs/`. Use `.agents/tasks/` only when task context needs to survive beyond the current conversation.
+
 ## Using The Template
 
 1. Create a new project from this repository.
 2. Run the `project-initialization` skill to replace placeholders in `AGENTS.md` and `.agents/rules/stack.md` with the real project commands and stack.
 3. Keep reusable conventions in `.agents/rules/`.
-4. Add project-specific product context in docs such as `docs/project-brief.md`.
-5. Add or remove rule files as the project stack requires.
+4. Use `.agents/tasks/<task-name>/TASK.md` for task-specific plans, findings, and handoffs that should persist across sessions.
+5. Add project-specific product context in docs such as `docs/project-brief.md`.
+6. Add or remove rule files as the project stack requires.
 
 ## Guidance
 
