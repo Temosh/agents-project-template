@@ -45,6 +45,7 @@ Required symlinks:
 | `.agents/rules/code-conventions-java.md` | Java-specific conventions |
 | `.agents/rules/code-conventions-swift-macos.md` | Swift desktop macOS app conventions |
 | `.agents/rules/stack.md` | Stack, tooling, dependency, configuration, persistence, and integration rules |
+| `.agents/rules/documentation-and-diagrams.md` | Documentation conventions and mandatory Mermaid diagram rules |
 
 ## Skills
 
@@ -70,6 +71,7 @@ Keep reusable conventions in `.agents/rules/`, reusable procedures in `.agents/s
 ## Guidance
 
 - Keep `.agents/rules/` as the source of truth.
+- Define every cross-agent project convention in `AGENTS.md` or `.agents/`; do not rely solely on provider-specific or externally injected instructions.
 - Use symlinks or thin references for agent-specific folders instead of duplicating rules.
 - Keep project-specific examples out of this template unless they are intentionally reusable.
 - Update `AGENTS.md` when adding, renaming, or removing rule files.

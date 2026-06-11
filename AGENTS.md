@@ -4,12 +4,20 @@ This repository is a reusable project template for AI-assisted development. It i
 
 Use this file as the short entry point for Claude Code, Codex, Copilot, Cline, and other agents. Put detailed guidance in `.agents/rules/` and keep provider-specific folders as links or thin references to the same source of truth.
 
+Any convention expected from every agent must be defined in this repository, either directly in `AGENTS.md` or in a referenced file under `.agents/`. Do not rely solely on provider-specific prompts, injected instructions, global configuration, or private agent memory for project rules.
+
 ## Before Working
 
 1. Read the project-specific brief when it exists: `docs/project-brief.md`.
 2. Read the relevant rules in `.agents/rules/` for the language, framework, and task.
 3. Inspect the existing code before making assumptions about architecture or style.
 4. Prefer small, focused changes that preserve user work already present in the tree.
+
+## Diagrams
+
+When a diagram would improve communication, use Mermaid wherever Mermaid can express the content. This applies to architecture diagrams, workflows, sequences, state transitions, dependency graphs, decision trees, entity relationships, and similar visual structures.
+
+Do not create ASCII-art, ANSI-art, or Unicode box-drawing diagrams. Use plain prose, lists, or tables only when the content is not meaningfully a diagram or Mermaid cannot express it clearly. Follow `.agents/rules/documentation-and-diagrams.md` for the complete rule.
 
 ## Task Notes
 
@@ -58,6 +66,7 @@ Use only the rules that apply to the current task:
 | File | Purpose |
 |------|---------|
 | `.agents/rules/stack.md` | Runtime, framework, tooling, dependency, and integration rules |
+| `.agents/rules/documentation-and-diagrams.md` | Documentation conventions and mandatory Mermaid diagram rules |
 | `.agents/rules/code-conventions.md` | Language-agnostic code conventions |
 | `.agents/rules/code-conventions-typescript.md` | TypeScript-specific conventions |
 | `.agents/rules/code-conventions-react.md` | React-specific conventions |
