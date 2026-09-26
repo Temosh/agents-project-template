@@ -17,6 +17,7 @@ Never produce during an initialization pass, unless the user separately asks:
 
 - Implementation plans, migration strategies, roadmaps, phase orders, task breakdowns, or effort estimates.
 - Entries under `.agents/tasks/`. Task notes are created when a task starts, not during initialization.
+- Architecture decision records under `docs/adr/`. The initial specs are the baseline; ADRs record decisions made after it.
 - Changes to source, build files, configuration, or dependencies — including fixes for real bugs noticed along the way.
 
 Findings that imply work go in the final chat response as a numbered list. The user decides what becomes a task.
@@ -28,7 +29,7 @@ Analysis, trade-offs, and recommendations belong in the chat response, not in fi
 1. Inspect the repository before asking questions.
    - Read `AGENTS.md`, `README.md`, `.agents/rules/stack.md`, and relevant rule files.
    - Inspect manifest/build files if present: `package.json`, `pnpm-lock.yaml`, `pom.xml`, `build.gradle`, `Package.swift`, `*.xcodeproj`, `pyproject.toml`, `Cargo.toml`, `Makefile`, CI files.
-   - Inspect existing docs under `docs/` if present.
+   - Inspect existing docs under `docs/` if present. If `docs/adr/README.md` exists, read the index: Accepted ADRs are settled decisions to preserve, and superseded ones explain history.
    - Inspect git history, not just the working tree: release and tag commits, and when key values last changed. A value the tree shows today may have been reverted right after the last release.
 
 2. Identify what is already knowable.
@@ -59,6 +60,7 @@ Analysis, trade-offs, and recommendations belong in the chat response, not in fi
    - Update `.agents/rules/stack.md` with real tooling, framework, dependency, config, persistence, and integration rules.
    - In the `AGENTS.md` task-notes section, state that task notes are created when a task starts, not during initialization, and that they are deleted when the task finishes.
    - State the link direction rule there too: a task note may point at `docs/` and `.agents/rules/`, but nothing outside `.agents/tasks/` may ever link into a task note.
+   - Keep the `AGENTS.md` Decision Records section and the ADR rules in `.agents/rules/documentation-and-diagrams.md` intact.
    - Keep reusable generic rules intact unless the project has a clear override.
    - Add or remove rule files only when the stack needs it.
 
@@ -68,6 +70,7 @@ Analysis, trade-offs, and recommendations belong in the chat response, not in fi
    - Ensure rule filenames match the actual `.agents/rules/` files.
    - Confirm no file was created outside the step 5 allowlist without approval.
    - Confirm no permanent file links into `.agents/tasks/`.
+   - Confirm no ADR was created under `docs/adr/`.
    - Run formatting/lint/docs checks only if configured and relevant.
 
 ## Clarification Questions
@@ -161,7 +164,7 @@ This is the complete set of files initialization may create. Create only the one
 
 ## Editing Rules
 
-- Do not overwrite existing project decisions; preserve and refine them.
+- Do not overwrite existing project decisions; preserve and refine them. Never contradict an Accepted ADR; raise the conflict in chat instead.
 - Do not invent stack versions, commands, or product facts. Ask or mark as open.
 - Keep placeholder text only when a decision is genuinely unknown.
 - Prefer concise docs that future agents will actually read.

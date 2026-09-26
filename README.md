@@ -10,6 +10,8 @@ The template keeps agent instructions in one shared place and exposes them throu
 .
 ├── AGENTS.md                 # Shared entry point for agents
 ├── CLAUDE.md                 # Thin reference to AGENTS.md
+├── docs/                     # Project docs: current facts (created by project initialization)
+│   └── adr/                  # Architecture decision records, added after the baseline
 ├── .agents/
 │   ├── rules/                # Source of truth for agent rules
 │   ├── skills/               # Reusable agent skills
@@ -59,6 +61,10 @@ Use `.agents/tasks/<task-name>/TASK.md` for persistent notes about a specific ta
 
 Keep reusable conventions in `.agents/rules/`, reusable procedures in `.agents/skills/`, and product or architecture documentation in `docs/`. Use `.agents/tasks/` only when task context needs to survive beyond the current conversation.
 
+## Decision Records
+
+Significant decisions made after the initial project baseline are recorded as ADRs in `docs/adr/NNNN-title.md`, indexed in `docs/adr/README.md`. Docs describe the current state; ADRs explain why a decision was made and which alternatives were rejected, so agents do not re-propose them. Agents read ADRs only before changing something settled. Full rules: `.agents/rules/documentation-and-diagrams.md`.
+
 ## Using The Template
 
 1. Create a new project from this repository.
@@ -75,3 +81,4 @@ Keep reusable conventions in `.agents/rules/`, reusable procedures in `.agents/s
 - Use symlinks or thin references for agent-specific folders instead of duplicating rules.
 - Keep project-specific examples out of this template unless they are intentionally reusable.
 - Update `AGENTS.md` when adding, renaming, or removing rule files.
+- Record significant post-baseline decisions as ADRs in `docs/adr/`; keep docs describing the current state.

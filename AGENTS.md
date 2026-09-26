@@ -25,6 +25,14 @@ Use `.agents/tasks/` for task-specific agent working notes that should persist a
 
 Create one subfolder per meaningful task or workstream, for example `.agents/tasks/<task-name>/`, and name the main task note `TASK.md` to mirror the `SKILL.md` convention. Use `TASK.md` for the objective, current state, plan, decisions, findings, and handoff notes. Keep reusable guidance in `.agents/rules/`, project facts and user-facing documentation in `docs/`, and transient scratch notes in the current conversation unless they need to be handed off.
 
+## Decision Records
+
+Significant decisions made after the initial project baseline are recorded as ADRs in `docs/adr/`, indexed in `docs/adr/README.md`. Docs hold the current facts; ADRs hold why a decision was made and which alternatives were rejected.
+
+- Do not read ADRs by default. Before proposing to change, reverse, or work around something the docs state as settled, check the index and read the relevant ADR.
+- Accepted ADRs are immutable; a changed decision gets a new ADR that supersedes the old one, and the affected docs are updated in the same change.
+- Follow `.agents/rules/documentation-and-diagrams.md` for when to write an ADR, the format, and the lifecycle.
+
 ## Commands
 
 Replace these placeholders when a project is created:
@@ -54,6 +62,7 @@ Recommended project docs:
 | `docs/api.md` | External/internal API contracts |
 | `docs/ui.md` | UX, layout, design-system rules for frontend projects |
 | `docs/operations.md` | Deployment, observability, runbooks |
+| `docs/adr/` | Architecture decision records, created when the first post-baseline decision is made |
 
 ## Stack
 
