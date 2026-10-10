@@ -21,9 +21,32 @@ Do not create ASCII-art, ANSI-art, or Unicode box-drawing diagrams. Use plain pr
 
 ## Task Notes
 
-Use `.agents/tasks/` for task-specific agent working notes that should persist across sessions, such as investigation findings, implementation plans, decisions, and handoff state.
+Use `.agents/tasks/` for task-specific agent working notes that should persist across sessions, such as investigation findings, implementation plans, decisions, and handoff state. Keep reusable guidance in `.agents/rules/`, project facts and user-facing documentation in `docs/`, and transient scratch notes in the current conversation unless they need to be handed off.
 
-Create one subfolder per meaningful task or workstream, for example `.agents/tasks/<task-name>/`, and name the main task note `TASK.md` to mirror the `SKILL.md` convention. Use `TASK.md` for the objective, current state, plan, decisions, findings, and handoff notes. Keep reusable guidance in `.agents/rules/`, project facts and user-facing documentation in `docs/`, and transient scratch notes in the current conversation unless they need to be handed off.
+- One folder per meaningful task or workstream: `.agents/tasks/<task-name>/TASK.md`. The uppercase `TASK.md` mirrors the `SKILL.md` convention. Supporting files for the task may sit next to `TASK.md`.
+- A task note is created when the task starts, not ahead of it.
+- `TASK.md` is self-contained: a fresh session prompted only with `Do task <task-name>` must be able to carry it out. It names any capability the task needs that only one agent or tool has.
+- **Finished tasks are deleted.** Before deletion, every settled fact, decision, or reusable finding moves into `docs/` or `.agents/rules/`, and decisions that meet the ADR criteria also get an ADR in `docs/adr/`, so the reasoning survives the deleted task. A task in `depends_on` whose folder no longer exists counts as done.
+- Agents never mark a task owned by `human` or `agent+human` as done without the developer's confirmation.
+- Link direction: tasks may link to `docs/`, `.agents/rules/`, and other tasks by folder name. Nothing outside `.agents/tasks/` ever links into a task.
+
+`TASK.md` format:
+
+```markdown
+---
+title: Short imperative title
+type: feature        # feature | bug | decision | design | chore | qa
+owner: agent         # agent | human | agent+human
+status: todo         # todo | in-progress | blocked | review
+depends_on: []       # other task folder names
+---
+
+## Goal
+## Scope
+## Acceptance Criteria
+## Verification      <!-- tests, commands, manual checks -->
+## Notes             <!-- working notes, findings, handoff state while in progress -->
+```
 
 ## Decision Records
 
@@ -81,7 +104,10 @@ Use only the rules that apply to the current task:
 | `.agents/rules/code-conventions-react.md` | React-specific conventions |
 | `.agents/rules/code-conventions-java.md` | Java-specific conventions |
 | `.agents/rules/code-conventions-swift-macos.md` | Swift desktop macOS app conventions |
+| `.agents/rules/code-conventions-csharp.md` | C# language conventions |
+| `.agents/rules/code-conventions-unity.md` | Unity scripts, scenes, prefabs, ScriptableObjects, physics, input, VR, performance, assets |
 | `.agents/rules/architecture-react-app.md` | React app source layout and dependency rules |
+| `.agents/rules/architecture-unity-game.md` | Unity game folder layout, assembly definitions, dependency rules, where new code goes |
 
 ## Skill Index
 

@@ -46,6 +46,9 @@ Required symlinks:
 | `.agents/rules/architecture-react-app.md` | Standard React app source layout and dependency rules |
 | `.agents/rules/code-conventions-java.md` | Java-specific conventions |
 | `.agents/rules/code-conventions-swift-macos.md` | Swift desktop macOS app conventions |
+| `.agents/rules/code-conventions-csharp.md` | C# language conventions |
+| `.agents/rules/code-conventions-unity.md` | Unity development conventions, including VR and performance |
+| `.agents/rules/architecture-unity-game.md` | Unity game folder layout, assembly definitions, and dependency rules |
 | `.agents/rules/stack.md` | Stack, tooling, dependency, configuration, persistence, and integration rules |
 | `.agents/rules/documentation-and-diagrams.md` | Documentation conventions and mandatory Mermaid diagram rules |
 
@@ -60,6 +63,8 @@ Required symlinks:
 Use `.agents/tasks/<task-name>/TASK.md` for persistent notes about a specific task or workstream. The uppercase `TASK.md` filename intentionally mirrors `SKILL.md`; use it as the main task document for the objective, current state, plan, decisions, findings, and handoff notes.
 
 Keep reusable conventions in `.agents/rules/`, reusable procedures in `.agents/skills/`, and product or architecture documentation in `docs/`. Use `.agents/tasks/` only when task context needs to survive beyond the current conversation.
+
+A task note is self-contained, so a fresh session can pick it up by name. When the task finishes, its settled facts move into `docs/` or `.agents/rules/` (plus an ADR when warranted) and the task folder is deleted; nothing outside `.agents/tasks/` links into a task. The `TASK.md` format and full lifecycle are in `AGENTS.md`.
 
 ## Decision Records
 

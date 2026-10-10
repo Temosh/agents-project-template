@@ -1,6 +1,6 @@
 ---
 name: project-initialization
-description: Use when starting a new project from this template or converting template placeholders into real project setup. Guides agents to inspect the repo, ask targeted clarification questions, create initial project docs such as project brief and architecture notes, update AGENTS.md and stack/rule placeholders, and produce a first usable AI-agent onboarding baseline. Describes what the project is; it does not produce implementation plans, migration strategies, or code changes.
+description: Runs the first setup pass of a new project made from this template, or converts template placeholders into a real project setup. Use it when starting such a project. It guides agents to inspect the repo, ask targeted clarification questions, create initial project docs such as project brief and architecture notes, update AGENTS.md and stack/rule placeholders, and produce a first usable AI-agent onboarding baseline. Describes what the project is; it does not produce implementation plans, migration strategies, or code changes.
 ---
 
 # Project Initialization
@@ -58,8 +58,7 @@ Analysis, trade-offs, and recommendations belong in the chat response, not in fi
 6. Replace template placeholders.
    - Update `AGENTS.md` with real project summary, commands, docs, stack, and source layout.
    - Update `.agents/rules/stack.md` with real tooling, framework, dependency, config, persistence, and integration rules.
-   - In the `AGENTS.md` task-notes section, state that task notes are created when a task starts, not during initialization, and that they are deleted when the task finishes.
-   - State the link direction rule there too: a task note may point at `docs/` and `.agents/rules/`, but nothing outside `.agents/tasks/` may ever link into a task note.
+   - Keep the `AGENTS.md` Task Notes section (lifecycle, `TASK.md` format, link direction) intact; adjust only the `type` values to fit the project.
    - Keep the `AGENTS.md` Decision Records section and the ADR rules in `.agents/rules/documentation-and-diagrams.md` intact.
    - Keep reusable generic rules intact unless the project has a clear override.
    - Add or remove rule files only when the stack needs it.
