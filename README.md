@@ -57,6 +57,7 @@ Required symlinks:
 | Skill | Purpose |
 |-------|---------|
 | `.agents/skills/project-initialization/SKILL.md` | First setup pass for a new project: gather context, ask clarifying questions, create initial docs, and replace template placeholders with real project guidance |
+| `.agents/skills/agents-project-setup/SKILL.md` | The whole template as one portable skill: installs it into an empty or existing project without overwriting anything, consolidates existing agent instructions, and runs `project-initialization` |
 
 ## Task Notes
 
@@ -78,6 +79,18 @@ Significant decisions made after the initial project baseline are recorded as AD
 4. Use `.agents/tasks/<task-name>/TASK.md` for task-specific plans, findings, and handoffs that should persist across sessions.
 5. Add project-specific product context in docs such as `docs/project-brief.md`.
 6. Add or remove rule files as the project stack requires.
+
+Without this repository: copy only `.agents/skills/agents-project-setup/` into a project (empty or existing) or into your agent's user-level skills folder, and ask the agent to set up the project with it. The skill carries copies of the template files, installs whatever the project lacks without overwriting anything, and then runs `project-initialization`, so the project ends up as if it had been started from this repository. It also folds existing `CLAUDE.md`, Cursor, Copilot, or Cline instructions into `AGENTS.md` and `.agents/rules/`, with approval.
+
+## Maintaining The Template
+
+`agents-project-setup` carries copies of the template files in its `assets/`. After changing `AGENTS.md`, `CLAUDE.md`, `README.md`, `.gitignore`, a rule file, or `project-initialization`, refresh them:
+
+```bash
+python3 .agents/skills/agents-project-setup/scripts/setup.py sync-assets .
+```
+
+`sync-assets . --check` only reports drift and exits non-zero when the copies are out of date.
 
 ## Guidance
 
