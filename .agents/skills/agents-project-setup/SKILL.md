@@ -15,7 +15,7 @@ In the commands below, `<skill>` is this skill's folder wherever it is installed
 - `AGENTS.md`: the entry point for every agent. `CLAUDE.md`: only `@AGENTS.md`.
 - `.agents/rules/`: the shared conventions. The first pass keeps the ones the stack needs.
 - `.agents/skills/`: `project-initialization` and this skill.
-- `.agents/tasks/` and `docs/adr/`: conventions only; the folders appear with the first task note or decision.
+- `.agents/tasks/`, `docs/adr/`, and `reports/`: conventions only; the folders appear with the first task note, decision, or report.
 - `docs/`: written by the first pass.
 - `.gitignore`: the template's, or the project's own with the entries for the links appended.
 - Discovery links, local to each clone and ignored by git as in the template's `.gitignore`: `.claude/rules -> ../.agents/rules`, `.claude/skills -> ../.agents/skills`, `.clinerules -> ./.agents/rules`. Tools look for rules and skills at these paths before the model reads any prompt, so a pointer file is no substitute for a link.

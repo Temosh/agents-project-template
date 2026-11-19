@@ -27,6 +27,7 @@ Use `.agents/tasks/` for task-specific agent working notes that should persist a
 - A task note is created when the task starts, not ahead of it.
 - `TASK.md` is self-contained: a fresh session prompted only with `Do task <task-name>` must be able to carry it out. It names any capability the task needs that only one agent or tool has.
 - **Finished tasks are deleted.** Before deletion, every settled fact, decision, or reusable finding moves into `docs/` or `.agents/rules/`, with a reason worth keeping as a sentence beside the fact, so it survives the deleted task. Finishing a task is not in itself a reason to write an ADR. A task in `depends_on` whose folder no longer exists counts as done.
+- A report a task produced stays in `reports/` after the task is deleted.
 - Agents never mark a task owned by `human` or `agent+human` as done without the developer's confirmation.
 - Link direction: tasks may link to `docs/`, `.agents/rules/`, and other tasks by folder name. Nothing outside `.agents/tasks/` ever links into a task.
 
@@ -54,6 +55,14 @@ ADRs in `docs/adr/`, indexed in `docs/adr/README.md`, are rare. Write one only w
 
 - Do not read ADRs by default. Before proposing to change, reverse, or work around something the docs state as settled, check the index and read the relevant ADR.
 - Accepted ADRs are immutable; a changed decision gets a new ADR that supersedes the old one, and the affected docs are updated in the same change.
+- Full rules and the format: `.agents/rules/documentation-and-diagrams.md`.
+
+## Reports
+
+`reports/` holds dated records of one examination each: code reviews, audits, security checks, test runs, measurements. Write one only when the developer asks for such an examination or a task's verification asks for recorded results; plans, task summaries, analysis, and recommendations are not reports. A report is a snapshot, not the current state: docs and rules hold the current facts and may cite it.
+
+- Do not read reports by default. When a task needs one, check its findings against the current code before acting: they describe the commit the report names.
+- Reports are not edited after they are written and are never deleted by agents.
 - Full rules and the format: `.agents/rules/documentation-and-diagrams.md`.
 
 ## Commands
@@ -86,6 +95,7 @@ Recommended project docs:
 | `docs/ui.md` | UX, layout, design-system rules for frontend projects |
 | `docs/operations.md` | Deployment, observability, runbooks |
 | `docs/adr/` | Architecture decision records: rare, see Decision Records; the folder appears with the first one |
+| `reports/` | Dated reviews, audits, test runs, measurements; snapshots, not current state; appears with the first report |
 
 ## Stack
 

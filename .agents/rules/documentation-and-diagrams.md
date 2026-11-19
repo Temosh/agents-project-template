@@ -85,3 +85,39 @@ An ADR fits on one screen, about 20 lines. It holds no current-state detail (ver
 
 - ADRs may link to `docs/` and `.agents/rules/`. Docs, rules, and tasks may link to ADRs.
 - ADRs never link to task notes, which are temporary.
+
+## Reports
+
+A report is a dated record of one examination: a code review, an audit, a security check, a test run, or a measurement on a device. It is evidence of what was found at that time, not a description of the project; docs and rules hold the current state.
+
+### When To Write One
+
+Only when the developer asks for a review, an audit, a test run, or a measurement, or when a task's verification asks for recorded results. When unsure, ask the developer in one line before writing it.
+
+Not reports, and never written to `reports/`:
+
+- Plans, working notes, and handoffs: they go in the task note.
+- A summary of finished work, analysis, or recommendations: they go in the chat response.
+- Current facts, conventions, and decision reasons: they go in `docs/`, `.agents/rules/`, or an ADR.
+- Tool output such as logs, profiler captures, or export reports: it stays where the tool writes it, and a report may cite it.
+
+### Location And Format
+
+- `reports/YYYY-MM-DD-kind-topic.md` at the repository root, outside `docs/`, for example `reports/2026-10-15-security-audit.md`. The folder appears with the first report.
+- The report opens with a summary a reader can stop after: the date, the commit or build examined, what was examined and how, and the main results, in at most about ten lines. The details follow, as long as the evidence needs.
+
+### Lifecycle
+
+- In the same change, findings that settle a fact or a convention go into `docs/` or `.agents/rules/`, which may cite the report as evidence. Findings that need work are listed in the chat response; the developer decides what becomes a task.
+- A report is not edited after it is written; a later examination gets a new report. Agents never delete a report; the developer may.
+
+### Reading Rule For Agents
+
+- Do not read reports by default.
+- Read one only when the task needs its evidence: a follow-up the developer points to, or a new measurement to compare with the last one.
+- Its findings describe the code at the commit it names; check them against the current code and docs before acting on any of them.
+
+### Links
+
+- Reports may link to `docs/`, `.agents/rules/`, and ADRs. Docs, rules, ADRs, and tasks may cite reports.
+- Reports never link to task notes, which are temporary.

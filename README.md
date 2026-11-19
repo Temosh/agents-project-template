@@ -12,6 +12,7 @@ The template keeps agent instructions in one shared place and exposes them throu
 ├── CLAUDE.md                 # Thin reference to AGENTS.md
 ├── docs/                     # Project docs: current facts (created by project initialization)
 │   └── adr/                  # Architecture decision records: rare, after the baseline
+├── reports/                  # Dated reviews, audits, test and measurement reports
 ├── .agents/
 │   ├── rules/                # Source of truth for agent rules
 │   ├── skills/               # Reusable agent skills
@@ -70,6 +71,10 @@ A task note is self-contained, so a fresh session can pick it up by name. When t
 ## Decision Records
 
 ADRs in `docs/adr/NNNN-title.md`, indexed in `docs/adr/README.md`, are rare. Agents write one only when you ask, or for a decision that someone reading the code and docs in two months would likely question or undo because its reason is written nowhere else, and they ask you when unsure. Upgrades, fixes, refactors, obvious or requested changes, and anything a doc already explains never get one; a short reason goes next to the fact in the doc. Docs describe the current state; agents read ADRs only before changing something settled. Full rules: `.agents/rules/documentation-and-diagrams.md`.
+
+## Reports
+
+Reviews, audits, security checks, test runs, and measurements that you ask for, or that a task's verification needs, are kept in `reports/YYYY-MM-DD-kind-topic.md` at the repository root. Each is a dated snapshot that opens with a short summary; docs hold the current facts and may cite it. Agents do not read reports by default, never edit or delete them, and check a report's findings against the current code before acting on them. Full rules: `.agents/rules/documentation-and-diagrams.md`.
 
 ## Using The Template
 

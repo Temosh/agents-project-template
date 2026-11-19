@@ -42,6 +42,10 @@ The plan reports `migrate CLAUDE.md`.
 - Entries that clash with files already in `.agents/` block the adoption: compare them, merge by hand with approval, and rerun `plan`.
 - `.clinerules` as a single file: treat its content like `CLAUDE.md` content, then delete the file (approval) so the link can take its place.
 
+## Reports Kept Under docs/
+
+Reviews, audits, and test or measurement reports kept under `docs/` (`docs/reports/`, `docs/reviews/`, and the like) move to `reports/` with approval, so `docs/` holds only current documents. Update the links to them in the same change; their file names may stay as they are.
+
 ## .gitignore
 
 The setup script appends `.clinerules` and `.claude`, as in the template. When the project tracks other files under `.claude/` (shared settings, commands, agents), it appends `.claude/rules` and `.claude/skills` instead, so those files stay committable. It never removes or reorders existing lines.
