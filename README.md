@@ -90,7 +90,9 @@ Without this repository: copy only `.agents/skills/agents-project-setup/` into a
 python3 .agents/skills/agents-project-setup/scripts/setup.py sync-assets .
 ```
 
-`sync-assets . --check` only reports drift and exits non-zero when the copies are out of date.
+Without Python, run `node .agents/skills/agents-project-setup/scripts/setup.mjs sync-assets .` instead. `sync-assets . --check` only reports drift and exits non-zero when the copies are out of date.
+
+The skill's scripts exist for Python and for Node.js. After changing one version, change the other the same way and run `node .agents/skills/agents-project-setup/evals/parity.mjs`, which needs both runtimes and checks that the two versions still print and do the same.
 
 ## Guidance
 

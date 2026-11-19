@@ -44,7 +44,7 @@ The plan reports `migrate CLAUDE.md`.
 
 ## .gitignore
 
-`setup.py` appends `.clinerules` and `.claude`, as in the template. When the project tracks other files under `.claude/` (shared settings, commands, agents), it appends `.claude/rules` and `.claude/skills` instead, so those files stay committable. It never removes or reorders existing lines.
+The setup script appends `.clinerules` and `.claude`, as in the template. When the project tracks other files under `.claude/` (shared settings, commands, agents), it appends `.claude/rules` and `.claude/skills` instead, so those files stay committable. It never removes or reorders existing lines.
 
 ## Rule Files Already In .agents/rules
 

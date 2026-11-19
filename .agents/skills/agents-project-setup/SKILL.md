@@ -1,14 +1,14 @@
 ---
 name: agents-project-setup
 description: Sets up the agents project template in an empty or existing project, so the project ends up as if it had been started from the template and given its first agent pass. Installs AGENTS.md as the single entry point for every agent, a CLAUDE.md that imports it, the shared rules in .agents/rules, the project-initialization skill, the task-note and decision-record conventions, and local discovery links for Claude Code and Cline, without overwriting anything; then runs project-initialization to describe the project. Use it when the user wants to make a repository agent-ready, add AGENTS.md or this agent setup to a new or existing codebase, fold CLAUDE.md, Cursor, Copilot or Cline instructions into one shared setup, recreate the discovery links after cloning, or re-check or update an existing setup from a newer template.
-compatibility: Needs file access and a shell in the project. The scripts need Python 3.8+ with the standard library only; references/manual-setup.md covers machines without Python. On Windows without symlink rights the links become directory junctions.
+compatibility: Needs file access and a shell in the project. The scripts run on Python 3.8+ or Node.js 18+, standard library only; references/manual-setup.md covers machines with neither. On Windows without symlink rights the links become directory junctions.
 ---
 
 # Agents Project Setup
 
 This skill is the agents project template in portable form. `assets/` holds the template's files under names that agent tools do not load on their own: `AGENTS.template.md`, `CLAUDE.template.md`, `README.template.md`, `gitignore.template`, `rules/`, and `skills/project-initialization/SKILL.template.md`. `scripts/setup.py` installs them into a project; the template's `project-initialization` skill then does the first pass, exactly as in a project started from the template.
 
-In the commands below, `<skill>` is this skill's folder wherever it is installed, and `<project>` is the project root (the git root when there is one). Use `python` instead of `python3` where that is the interpreter's name.
+In the commands below, `<skill>` is this skill's folder wherever it is installed, and `<project>` is the project root (the git root when there is one). Use `python` instead of `python3` where that is the interpreter's name. Without Python, use Node.js: `node <skill>/scripts/setup.mjs` and `node <skill>/scripts/verify.mjs` take the same commands and flags as `setup.py` and `verify.py` and print the same report.
 
 ## What The Project Gets
 
@@ -61,7 +61,7 @@ Then:
 
 - Run `python3 <skill>/scripts/setup.py apply <project>` with the flags from the approved plan. It never overwrites: existing files show up as `same` or `keep` (differs), and rerunning is safe.
 - `conflict` lines stay until step 4 or the user resolves them; rerun `apply` afterwards.
-- Without Python, follow `references/manual-setup.md`.
+- Without Python or Node.js, follow `references/manual-setup.md`.
 
 ### 4. Consolidate Existing Instructions
 
@@ -84,7 +84,7 @@ In the final response:
 - What was created, appended, moved, consolidated, and left alone; conflicts still open.
 - The first pass's own report: docs written, assumptions, open questions.
 - The verify result.
-- That the discovery links are local and ignored by git, and that after a fresh clone `python3 .agents/skills/agents-project-setup/scripts/setup.py links .` recreates them.
+- That the discovery links are local and ignored by git, and that after a fresh clone `python3 .agents/skills/agents-project-setup/scripts/setup.py links .` (or `node .agents/skills/agents-project-setup/scripts/setup.mjs links .`) recreates them.
 
 ## Re-Check And Template Updates
 
@@ -99,6 +99,8 @@ For an `initialized` project, or when a newer version of this skill is available
 
 In the template repository, after changing `AGENTS.md`, `CLAUDE.md`, `README.md`, `.gitignore`, a rule file, or another template skill, refresh this skill's copies with `python3 <skill>/scripts/setup.py sync-assets <template-root>`; `--check` only reports drift. It refuses a folder whose `AGENTS.md` has no placeholders, so it does not run against a real project by accident.
 
+The scripts exist for both runtimes: `setup.py` and `verify.py` for Python, `setup.mjs` and `verify.mjs` (with their `python-compat.mjs`) for Node.js. A change to one version goes into the other in the same change. Then run `node <skill>/evals/parity.mjs`: it needs both runtimes and git, runs both versions on sample projects, and compares their output, exit codes, and resulting files. `evals/` is not copied into projects.
+
 ## Rules
 
 - Never overwrite, move, or delete existing content without the user's approval. The scripts only create, append, and (with `--adopt`) move.
@@ -110,6 +112,6 @@ In the template repository, after changing `AGENTS.md`, `CLAUDE.md`, `README.md`
 ## Done When
 
 - `inspect` shows every link `ok`, and `setup` reads `initialized` (or the open placeholders are reported).
-- `verify.py` reports no errors, and each warning is fixed or explained.
+- `verify.py` (or `verify.mjs`) reports no errors, and each warning is fixed or explained.
 - Every conflict is resolved or reported, and no existing instruction was lost.
 - The first pass met its own completion criteria (not applicable in re-check mode).

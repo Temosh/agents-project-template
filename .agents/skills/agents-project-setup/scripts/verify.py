@@ -11,8 +11,10 @@ Warnings: template placeholders left, paths in AGENTS.md that do not exist, skil
 from the Skill Index, discovery links git does not ignore, box-drawing characters in the
 agent Markdown (the template's diagram rule asks for Mermaid instead).
 
-Requires Python 3.8+, standard library only.
+Requires Python 3.8+, standard library only. verify.mjs does the same with Node.js.
 """
+
+# verify.mjs mirrors this script: change both together, then run evals/parity.mjs.
 
 import os
 import re
@@ -135,11 +137,11 @@ def all_markdown(project, limit=5000):
     found = []
     for dirpath, dirnames, filenames in os.walk(str(project)):
         rel = Path(dirpath).relative_to(project).as_posix()
-        dirnames[:] = [
+        dirnames[:] = sorted(
             d for d in dirnames
             if d not in SKIP_DIRS and (d if rel == "." else rel + "/" + d) not in (".agents/tasks", ".agents/skills")
-        ]
-        for name in filenames:
+        )
+        for name in sorted(filenames):
             if name.endswith(".md"):
                 found.append(Path(dirpath) / name)
                 if len(found) >= limit:

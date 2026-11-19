@@ -22,8 +22,10 @@ sync-assets  For maintainers of the template repository: copy its files into thi
 --adopt      Move the contents of real .claude/rules, .claude/skills or .clinerules folders
              into .agents/ so the links can replace them. Only with the user's approval.
 
-Requires Python 3.8+, standard library only.
+Requires Python 3.8+, standard library only. setup.mjs does the same with Node.js.
 """
+
+# setup.mjs mirrors this script: change both together, then run evals/parity.mjs.
 
 import argparse
 import filecmp
@@ -118,7 +120,7 @@ def tree_files(root, skip_top=()):
             d for d in dirnames
             if not skipped_name(d) and not (rel_dir == Path(".") and d in skip_top)
         )
-        for name in filenames:
+        for name in sorted(filenames):
             if not skipped_name(name):
                 found[(rel_dir / name).as_posix()] = Path(dirpath) / name
     return found
@@ -306,7 +308,7 @@ def walk_limited(project, depth=3):
     for dirpath, dirnames, filenames in os.walk(str(project)):
         rel = Path(dirpath).relative_to(project)
         level = 0 if rel == Path(".") else len(rel.parts)
-        bundles = [d for d in dirnames if d.endswith(".xcodeproj")]
+        bundles = sorted(d for d in dirnames if d.endswith(".xcodeproj"))
         dirnames[:] = sorted(
             d for d in dirnames
             if d not in SKIP_DIRS and not d.startswith(".") and not d.endswith(".xcodeproj") and level < depth

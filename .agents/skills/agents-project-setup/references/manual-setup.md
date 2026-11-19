@@ -1,6 +1,6 @@
 # Manual Setup
 
-For machines without Python. These steps do what `setup.py apply` does, and like it they never overwrite an existing file. Inspect and plan by reading the project yourself: list what exists before creating anything.
+For machines with neither Python nor Node.js. These steps do what `setup.py apply` does, and like it they never overwrite an existing file. Inspect and plan by reading the project yourself: list what exists before creating anything.
 
 ## macOS, Linux, Git Bash
 
@@ -57,4 +57,4 @@ mklink /J .clinerules .agents\rules
 
 When the project tracks other files under `.claude/` (`git ls-files .claude`), write `.claude/rules` and `.claude/skills` instead of `.claude`.
 
-Then continue with workflow step 4. Verification without Python means checking the items `scripts/verify.py` lists in its header by hand.
+Then continue with workflow step 4. Verification without either runtime means checking the items `scripts/verify.py` lists in its header by hand.
