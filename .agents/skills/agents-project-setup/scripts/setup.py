@@ -153,6 +153,20 @@ def is_link(path):
     return False
 
 
+UNFOLLOWABLE_LINK = "symlink with / in its target, which Windows cannot follow"
+
+
+def windows_cannot_follow(path):
+    """True for a Windows symlink whose target uses "/". Windows does not resolve it, but
+    Python's realpath() does, so points_to() alone would accept the link."""
+    if os.name != "nt" or not os.path.islink(str(path)):
+        return False
+    try:
+        return "/" in os.readlink(str(path))
+    except OSError:
+        return False
+
+
 def points_to(path, directory):
     return os.path.realpath(str(path)) == os.path.realpath(str(directory))
 
@@ -218,7 +232,8 @@ def git(project, *args):
     try:
         return subprocess.run(
             ["git", "-C", str(project)] + list(args),
-            stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True,
+            # Git writes UTF-8 on every platform; the locale default is the ANSI code page on Windows.
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, encoding="utf-8", errors="replace",
         )
     except OSError:
         return None
@@ -402,6 +417,8 @@ def link_status(project, link_rel, want):
     if not os.path.lexists(str(path)):
         return "missing"
     if is_link(path):
+        if windows_cannot_follow(path):
+            return UNFOLLOWABLE_LINK
         return "ok" if points_to(path, project / want) else "points to {}".format(os.readlink(str(path)))
     if path.is_dir():
         return "real folder ({})".format(entries_text(len(visible_entries(path))))
@@ -505,7 +522,9 @@ def compute_plan(project, rules, adopt):
             plan.append(Action("link", link_rel, "-> " + target, target=target, want=want))
             continue
         if is_link(path):
-            if points_to(path, project / want):
+            if windows_cannot_follow(path):
+                plan.append(Action("conflict", link_rel, UNFOLLOWABLE_LINK + ": delete it with approval, then rerun"))
+            elif points_to(path, project / want):
                 plan.append(Action("same", link_rel, "link -> " + target))
             else:
                 plan.append(Action("conflict", link_rel, "links to {}, expected {}".format(os.readlink(str(path)), target)))
@@ -644,7 +663,8 @@ def print_plan(plan, heading):
 def make_link(path, target):
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        os.symlink(target, str(path), target_is_directory=True)
+        # The platform's separator: Windows cannot follow a symlink whose target uses "/".
+        os.symlink(target.replace("/", os.sep), str(path), target_is_directory=True)
         return "symlink"
     except OSError:
         if os.name != "nt":
@@ -764,7 +784,9 @@ def cmd_links(project):
             print("  {:<15} ok".format(link_rel))
         else:
             problems += 1
-            print("  {:<15} {}: resolve it by hand (references/existing-projects.md)".format(link_rel, status))
+            fix = ("delete it with approval, then rerun links" if status == UNFOLLOWABLE_LINK
+                   else "resolve it by hand (references/existing-projects.md)")
+            print("  {:<15} {}: {}".format(link_rel, status, fix))
     return 1 if problems else 0
 
 
@@ -827,7 +849,17 @@ def cmd_sync_assets(root, check, force):
 # ---------------------------------------------------------------------------
 
 
+def use_utf8_output():
+    """Write output as UTF-8. Agents read it through a pipe, and on Windows Python before 3.15
+    encodes a pipe with the ANSI code page, so print() fails on any character outside it."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="backslashreplace")
+
+
 def main():
+    use_utf8_output()
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sub = parser.add_subparsers(dest="command")
     sub.add_parser("inspect").add_argument("project")

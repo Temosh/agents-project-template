@@ -4,8 +4,8 @@
   verify.py <project>
 
 Errors (exit 1): AGENTS.md missing, CLAUDE.md not importing it, discovery links missing or
-pointing elsewhere, Rule Index or Skill Index out of step with the files, links from outside
-.agents/tasks/ into a task note.
+pointing elsewhere, Windows symlinks with / in the target, Rule Index or Skill Index out of
+step with the files, links from outside .agents/tasks/ into a task note.
 
 Warnings: template placeholders left, paths in AGENTS.md that do not exist, skills missing
 from the Skill Index, discovery links git does not ignore, box-drawing characters in the
@@ -100,10 +100,22 @@ def is_link(path):
     return False
 
 
+def windows_cannot_follow(path):
+    """True for a Windows symlink whose target uses "/". Windows does not resolve it, but
+    Python's realpath() does, so the realpath comparison alone would accept the link."""
+    if os.name != "nt" or not os.path.islink(str(path)):
+        return False
+    try:
+        return "/" in os.readlink(str(path))
+    except OSError:
+        return False
+
+
 def git(project, *args):
     try:
-        return subprocess.run(["git", "-C", str(project)] + list(args),
-                              stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
+        # Git writes UTF-8 on every platform; the locale default is the ANSI code page on Windows.
+        return subprocess.run(["git", "-C", str(project)] + list(args), stdout=subprocess.PIPE,
+                              stderr=subprocess.PIPE, encoding="utf-8", errors="replace")
     except OSError:
         return None
 
@@ -158,6 +170,10 @@ def check_links(project, report):
             continue
         if not is_link(path):
             report.error("{} is a real {}, not a link to {}".format(link, "folder" if path.is_dir() else "file", want))
+            continue
+        if windows_cannot_follow(path):
+            report.error("{} is a symlink with / in its target, which Windows cannot follow: "
+                         "delete it with approval, then run setup.py links <project>".format(link))
             continue
         if os.path.realpath(str(path)) != os.path.realpath(str(project / want)):
             report.error("{} points to {}, expected {}".format(link, os.readlink(str(path)), want))
@@ -253,7 +269,17 @@ def check_records(project, report):
             report.info("task notes: {}".format(", ".join(names)))
 
 
+def use_utf8_output():
+    """Write output as UTF-8. Agents read it through a pipe, and on Windows Python before 3.15
+    encodes a pipe with the ANSI code page, so print() fails on any character outside it."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure is not None:
+            reconfigure(encoding="utf-8", errors="backslashreplace")
+
+
 def main():
+    use_utf8_output()
     if len(sys.argv) != 2 or sys.argv[1] in ("-h", "--help"):
         print(__doc__)
         return 2
