@@ -1,6 +1,6 @@
 ---
 name: agents-project-setup
-description: Sets up the agents project template in an empty or existing project, so the project ends up as if it had been started from the template and given its first agent pass. Installs AGENTS.md as the single entry point for every agent, a CLAUDE.md that imports it, the shared rules in .agents/rules, the project-initialization skill, the task-note and decision-record conventions, and local discovery links for Claude Code and Cline, without overwriting anything; then runs project-initialization to describe the project. Use it when the user wants to make a repository agent-ready, add AGENTS.md or this agent setup to a new or existing codebase, fold CLAUDE.md, Cursor, Copilot or Cline instructions into one shared setup, recreate the discovery links after cloning, or re-check or update an existing setup from a newer template.
+description: Sets up the agents project template in an empty or existing project, so the project ends up as if it had been started from the template and given its first agent pass. Installs AGENTS.md as the single entry point for every agent, a CLAUDE.md that imports it, the shared rules in .agents/rules, the project-initialization skill, the task-note and decision-record conventions, and local discovery links for Claude Code and Cline, without overwriting anything; then runs project-initialization to describe the project. Use it when the user wants to make a repository agent-ready, add AGENTS.md or this agent setup to a new or existing codebase, fold CLAUDE.md, Cursor, Copilot or Cline instructions into one shared setup, recreate the discovery links after cloning, re-check or update an existing setup from a newer template, or clean up an overgrown docs/adr/ folder.
 compatibility: Needs file access and a shell in the project. The scripts run on Python 3.8+ or Node.js 18+, standard library only; references/manual-setup.md covers machines with neither. On Windows without symlink rights the links become directory junctions.
 ---
 
@@ -94,6 +94,7 @@ For an `initialized` project, or when a newer version of this skill is available
 - `note` lines show bundled rule files that are present but not selected, and the project's own rule files; leave them unless the user asks.
 - `keep .agents/skills/agents-project-setup/` means another version of this skill is installed in the project; offer to replace it with this one after showing what changed.
 - Missing links, for example after a clone: `python3 <skill>/scripts/setup.py links <project>`.
+- ADRs: when `docs/adr/` holds ADRs, offer the triage in `references/adr-triage.md`. It also brings the project's ADR rule up to date, so the folder does not fill up again. It reads every ADR, so run it only when the user agrees.
 
 ## Maintaining The Bundled Template
 

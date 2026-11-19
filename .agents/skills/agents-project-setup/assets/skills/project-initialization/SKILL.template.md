@@ -17,7 +17,7 @@ Never produce during an initialization pass, unless the user separately asks:
 
 - Implementation plans, migration strategies, roadmaps, phase orders, task breakdowns, or effort estimates.
 - Entries under `.agents/tasks/`. Task notes are created when a task starts, not during initialization.
-- Architecture decision records under `docs/adr/`. The initial specs are the baseline; ADRs record decisions made after it.
+- Architecture decision records under `docs/adr/`. The initial specs are the baseline; ADRs record only the rare later decisions that the ADR rule in `.agents/rules/documentation-and-diagrams.md` allows.
 - Changes to source, build files, configuration, or dependencies — including fixes for real bugs noticed along the way.
 
 Findings that imply work go in the final chat response as a numbered list. The user decides what becomes a task.

@@ -11,7 +11,7 @@ The template keeps agent instructions in one shared place and exposes them throu
 ├── AGENTS.md                 # Shared entry point for agents
 ├── CLAUDE.md                 # Thin reference to AGENTS.md
 ├── docs/                     # Project docs: current facts (created by project initialization)
-│   └── adr/                  # Architecture decision records, added after the baseline
+│   └── adr/                  # Architecture decision records: rare, after the baseline
 ├── .agents/
 │   ├── rules/                # Source of truth for agent rules
 │   ├── skills/               # Reusable agent skills
@@ -65,11 +65,11 @@ Use `.agents/tasks/<task-name>/TASK.md` for persistent notes about a specific ta
 
 Keep reusable conventions in `.agents/rules/`, reusable procedures in `.agents/skills/`, and product or architecture documentation in `docs/`. Use `.agents/tasks/` only when task context needs to survive beyond the current conversation.
 
-A task note is self-contained, so a fresh session can pick it up by name. When the task finishes, its settled facts move into `docs/` or `.agents/rules/` (plus an ADR when warranted) and the task folder is deleted; nothing outside `.agents/tasks/` links into a task. The `TASK.md` format and full lifecycle are in `AGENTS.md`.
+A task note is self-contained, so a fresh session can pick it up by name. When the task finishes, its settled facts move into `docs/` or `.agents/rules/`, with any reason worth keeping as a sentence beside the fact, and the task folder is deleted; nothing outside `.agents/tasks/` links into a task. The `TASK.md` format and full lifecycle are in `AGENTS.md`.
 
 ## Decision Records
 
-Significant decisions made after the initial project baseline are recorded as ADRs in `docs/adr/NNNN-title.md`, indexed in `docs/adr/README.md`. Docs describe the current state; ADRs explain why a decision was made and which alternatives were rejected, so agents do not re-propose them. Agents read ADRs only before changing something settled. Full rules: `.agents/rules/documentation-and-diagrams.md`.
+ADRs in `docs/adr/NNNN-title.md`, indexed in `docs/adr/README.md`, are rare. Agents write one only when you ask, or for a decision that someone reading the code and docs in two months would likely question or undo because its reason is written nowhere else, and they ask you when unsure. Upgrades, fixes, refactors, obvious or requested changes, and anything a doc already explains never get one; a short reason goes next to the fact in the doc. Docs describe the current state; agents read ADRs only before changing something settled. Full rules: `.agents/rules/documentation-and-diagrams.md`.
 
 ## Using The Template
 

@@ -20,21 +20,27 @@ Use these rules for project documentation, task notes, plans, explanations, revi
 
 ## Architecture Decision Records
 
-Docs describe what the project **is**. ADRs record **why** a significant decision was made and which alternatives were rejected, so agents and people do not re-propose settled alternatives.
+An ADR keeps the reason for a decision that nothing else in the repository explains. Docs say what the project **is**; an ADR says only **why** one option was chosen over the others. Each ADR is one more document a later session may read and follow after it has gone stale, so ADRs stay rare and short.
 
 ### When To Write One
 
-Write an ADR for a decision made after the initial project baseline when at least one applies:
+By default, do not. Write an ADR only when the developer asks for one, or when the decision passes this test: a developer reading the code and docs in two months would likely question or undo it, because its reason is not written anywhere else. Typical cases: one viable architecture, data model, or external service chosen over another, or a deliberate trade-off that looks wrong without its constraint, measurement, or failed attempt.
 
-- It is hard or expensive to reverse.
-- It affects several modules, layers, or workflows.
-- Real alternatives were considered and rejected.
-- It is likely to be questioned again later.
-- It changes or reverses a decision that the docs state as settled.
+When you are not sure the decision passes, ask the developer in one line before writing it, for example "ADR? Chose X over Y because Z". With no one to ask, leave the ADR out: write the reason as a sentence in the relevant doc and name the candidate in your report. Name every ADR you write in your final report.
 
-ADRs cover architecture and other significant project decisions (product, process, tooling). Do not write ADRs for small implementation choices, code style (use `.agents/rules/`), or plain facts (use `docs/`).
+A reason that fits in a sentence goes next to the fact in the relevant doc instead, for example "Payments go through X; Y has no refunds in our region." That is the default home for a reason.
 
-The initial specs created during project initialization are the baseline and are not recorded as ADRs.
+Never write an ADR for:
+
+- Library, framework, runtime, or tool upgrades, or the steps of a migration that was already decided.
+- Bug fixes, refactors, renames, moved files, formatting, or performance tuning.
+- Work the developer or the product docs already asked for: carrying out a decision is not a new decision.
+- Choices most competent developers would make the same way.
+- Conventions (they go in `.agents/rules/`) or current-state facts (they go in `docs/`).
+- Anything a doc or an existing ADR already explains.
+- The specs written during project initialization: they are the baseline.
+
+A project gathers a handful of ADRs over its life, not one per task or per feature.
 
 ### Location And Naming
 
@@ -49,29 +55,25 @@ The initial specs created during project initialization are the baseline and are
 - Status: Accepted            <!-- Proposed | Accepted | Superseded by NNNN | Deprecated -->
 - Date: YYYY-MM-DD
 
-## Context
-
-The problem and the forces at play, in a few sentences.
-
 ## Decision
 
-What was decided.
+One or two sentences.
+
+## Why
+
+The reason a later reader would not find in the code or docs.
 
 ## Alternatives Rejected
 
-- Alternative: why it was rejected.
-
-## Consequences
-
-What becomes easier or harder; follow-up obligations.
+- Alternative: why it was rejected, in one line.
 ```
 
-Keep ADRs short: 10-30 lines is typical.
+An ADR fits on one screen, about 20 lines. It holds no current-state detail (versions, configuration, APIs, file layout, commands); it links to the doc that has it.
 
 ### Lifecycle
 
 - An ADR is immutable once Accepted. Only its status line may change.
-- To change a decision, write a new ADR and mark the old one `Superseded by NNNN`.
+- To change a decision, write a new ADR and mark the old one `Superseded by NNNN`. The new ADR has to pass the same test as any other.
 - When an ADR is accepted, update the affected docs and rules in the same change so they state the new facts. The docs hold the current state; the ADR holds the reasoning.
 
 ### Reading Rule For Agents

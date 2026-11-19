@@ -26,7 +26,7 @@ Use `.agents/tasks/` for task-specific agent working notes that should persist a
 - One folder per meaningful task or workstream: `.agents/tasks/<task-name>/TASK.md`. The uppercase `TASK.md` mirrors the `SKILL.md` convention. Supporting files for the task may sit next to `TASK.md`.
 - A task note is created when the task starts, not ahead of it.
 - `TASK.md` is self-contained: a fresh session prompted only with `Do task <task-name>` must be able to carry it out. It names any capability the task needs that only one agent or tool has.
-- **Finished tasks are deleted.** Before deletion, every settled fact, decision, or reusable finding moves into `docs/` or `.agents/rules/`, and decisions that meet the ADR criteria also get an ADR in `docs/adr/`, so the reasoning survives the deleted task. A task in `depends_on` whose folder no longer exists counts as done.
+- **Finished tasks are deleted.** Before deletion, every settled fact, decision, or reusable finding moves into `docs/` or `.agents/rules/`, with a reason worth keeping as a sentence beside the fact, so it survives the deleted task. Finishing a task is not in itself a reason to write an ADR. A task in `depends_on` whose folder no longer exists counts as done.
 - Agents never mark a task owned by `human` or `agent+human` as done without the developer's confirmation.
 - Link direction: tasks may link to `docs/`, `.agents/rules/`, and other tasks by folder name. Nothing outside `.agents/tasks/` ever links into a task.
 
@@ -50,11 +50,11 @@ depends_on: []       # other task folder names
 
 ## Decision Records
 
-Significant decisions made after the initial project baseline are recorded as ADRs in `docs/adr/`, indexed in `docs/adr/README.md`. Docs hold the current facts; ADRs hold why a decision was made and which alternatives were rejected.
+ADRs in `docs/adr/`, indexed in `docs/adr/README.md`, are rare. Write one only when the developer asks, or for a decision that a developer reading the code and docs in two months would likely question or undo because its reason is written nowhere else; when unsure, ask the developer first. Library and tool upgrades, bug fixes, refactors, obvious or requested changes, and anything a doc already explains never get an ADR; a reason that fits in a sentence goes next to the fact in the relevant doc.
 
 - Do not read ADRs by default. Before proposing to change, reverse, or work around something the docs state as settled, check the index and read the relevant ADR.
 - Accepted ADRs are immutable; a changed decision gets a new ADR that supersedes the old one, and the affected docs are updated in the same change.
-- Follow `.agents/rules/documentation-and-diagrams.md` for when to write an ADR, the format, and the lifecycle.
+- Full rules and the format: `.agents/rules/documentation-and-diagrams.md`.
 
 ## Commands
 
@@ -85,7 +85,7 @@ Recommended project docs:
 | `docs/api.md` | External/internal API contracts |
 | `docs/ui.md` | UX, layout, design-system rules for frontend projects |
 | `docs/operations.md` | Deployment, observability, runbooks |
-| `docs/adr/` | Architecture decision records, created when the first post-baseline decision is made |
+| `docs/adr/` | Architecture decision records: rare, see Decision Records; the folder appears with the first one |
 
 ## Stack
 
